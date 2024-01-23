@@ -5,23 +5,16 @@ tar xvfz node_exporter-*.*-amd64.tar.gz
 sleep 2
 sudo mv node_exporter-1.7.0.linux-amd64 /usr/local/bin/node_exporter
 sleep 2
-sudo nano /etc/systemd/system/node_exporter.service <<EOL
-
-[Unit]
-
+echo "[Unit]
 Description=Node Exporter
-
 After=network.target
 
 [Service]
-
 ExecStart=/bin/sh -c '/usr/local/bin/node_exporter/node_exporter'
 
 [Install]
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/node_exporter.service
 
-WantedBy=multi-user.target
-
-EOL
 sleep 2
 sudo mv /etc/systemd/system/node_exporter.service.save /etc/systemd/system/node_exporter.service
 sudo systemctl daemon-reload
