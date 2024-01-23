@@ -1,22 +1,12 @@
 #!/bin/bash
 wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
-sleep 2
+sleep 10
 tar xvfz node_exporter-*.*-amd64.tar.gz
 sleep 2
 sudo mv node_exporter-1.7.0.linux-amd64 /usr/local/bin/node_exporter
 sleep 2
-echo "[Unit]
-Description=Node Exporter
-After=network.target
-
-[Service]
-ExecStart=/bin/sh -c '/usr/local/bin/node_exporter/node_exporter'
-
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/node_exporter.service
-
-sleep 2
-sudo mv /etc/systemd/system/node_exporter.service.save /etc/systemd/system/node_exporter.service
+sudo wget https://raw.githubusercontent.com/loveyourvoice/exporter_install_centos/master/node_exporter.service -O /etc/systemd/system/node_exporter.service
+sleep 10
 sudo systemctl daemon-reload
 sleep 2
 sudo systemctl enable node_exporter
